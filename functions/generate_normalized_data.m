@@ -5,21 +5,21 @@ addpath('./transformators');
 
 
 
-%% options and descriptions for file saving
-savedFileName = "sys2_c1_0_1_c3_0_1_1_9_IC_0_7_4_1600samples_polar";
-savedFileFolder = "..\resources\data\simulation\normalized";
-
-
-
 %% load simulation results
 loadedFileFolder = '..\resources\data\';
 loadedDataOrigin = 'simulation';
-loadedFilename = 'sys2_c1_0_1_c3_0_1_1_9_IC_0_7_4_1600samples.mat';
+loadedFileName = 'sys2_c1_0_3_c3_0_1_1_9_IC_0_7_2_1600samples';
 
-load(fullfile(loadedFileFolder, loadedDataOrigin, "raw", loadedFilename));
+load(fullfile(loadedFileFolder, loadedDataOrigin, "raw", loadedFileName));
 
 x = data.x;
 meta = data.meta;
+
+
+
+%% options and descriptions for file saving
+savedFileName = strcat(loadedFileName, "_absamp");
+savedFileFolder = "..\resources\data\simulation\normalized";
 
 
 
@@ -30,15 +30,14 @@ rho = zeros(size(x, 1), size(x, 3));
 
 for i = 1 : size(x, 3)
     
-    rho(:, i) = normalizeSeries("max +1", ...
-                    normalizeSeries("polar", x(:, 1, i), x(:, 2, i)) ...
-                  );
+    rho(:, i) = normalizeSeries("abs -1 to +1", x(:, 1, i));
+
 end
 
 
 
 %% extend metadata
-meta.normalization = "polar transformation and then setting the maximum to be 1";
+meta.normalization = "normalizing the absolute amplitudes to be between -1 and +1";
 
 
 

@@ -1,13 +1,13 @@
 clc, clear all;
 
 networkFileFolder = "..\..\results\networks\trained_feedforwardnet";
-networkFileName = "ffn_sys1_polar_c1_0_5_1600samples.mat";
+networkFileName = "ffn_advanced_sys1_absamp_c1_0_5_c3_0_5_1_5_IC_0_7_2_1600samples.mat";
 
 
 
 %% load training data set
 % load series
-seriesFileName = "sys1_c1_0_5_c3_0_5_1_5_polar_normalized.mat";
+seriesFileName = "sys1_c1_0_5_c3_0_5_1_5_IC_0_7_2_1600samples_absamp.mat";
 seriesFileFolder = "..\..\resources\data\simulation\normalized";
 
 series = load(fullfile(seriesFileFolder, seriesFileName));
@@ -26,8 +26,9 @@ targetValues = targets.data.targetValues;
 
 
 %% network training
-% train ffn network with hidden layer dims [10 20 10]
-[net, tr] = trainFeedForward([10 20 10], rho, targetValues);
+% train ffn network with hidden layer dims [15 20 20 10]
+hiddenLayerDims = [15 20 20 10];
+[net, tr] = trainFeedForward(hiddenLayerDims, rho, targetValues);
 
 
 
@@ -38,7 +39,7 @@ data.net = net;
 data.meta.trainingData = meta;
 
 data.meta.networkDetails.type = "feedforward neural network";
-data.meta.networkDetails.dimensions = [10, 20, 10];
+data.meta.networkDetails.dimensions = hiddenLayerDims;
 
 save(fullfile(networkFileFolder, networkFileName), "data");
 

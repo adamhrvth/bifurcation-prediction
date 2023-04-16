@@ -5,7 +5,7 @@ addpath("..\..\functions\error_computation");
 
 
 %% load network
-networkFileName = "ffn_advanced_sys1_polar_c1_0_5_c3_0_5_1_5_IC_0_7_2_1600samples.mat";
+networkFileName = "ffn_advanced_sys1_absamp_c1_0_5_c3_0_5_1_5_IC_0_7_2_1600samples.mat";
 networkFolderName = "..\..\results\networks\trained_";
 networkClass = "feedforwardnet";
 
@@ -16,7 +16,7 @@ net = network.data.net;
 
 
 %% load testing data set
-seriesFileName = "sys2_c1_0_3_c3_0_1_1_9_IC_0_7_2_1600samples_polar.mat";
+seriesFileName = "sys2_c1_0_1_c3_0_5_1_5_IC_0_7_2_1600samples_tabsamp.mat";
 seriesFileFolder = "..\..\resources\data\simulation\normalized";
 
 series = load(fullfile(seriesFileFolder, seriesFileName));

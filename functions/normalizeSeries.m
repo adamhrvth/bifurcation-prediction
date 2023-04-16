@@ -3,6 +3,8 @@ function x = normalizeSeries(method, varargin)
     
 
     switch method
+        case "abs -1 to +1"
+            x = transform_min1_plus1(transform_abs(varargin{1}));
         case "-1 to +1"
             x = transform_min1_plus1(varargin{1});
         case "max +1"
