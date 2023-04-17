@@ -13,8 +13,8 @@ savedFileForder = "..\resources\data\simulation\raw";
 
 % parameters
 c1 = 0.1;
-c3Crit = -10 / 9 * sqrt(2*c1) * 1.34;       % System 2
-% c3Crit = 40 / 9 * c1;                     % System 1
+% c3Crit = -10 / 9 * sqrt(2*c1) * 1.34;       % System 2
+c3Crit = 40 / 9 * c1;                     % System 1
 c3Range = [0.5, 1.5] * c3Crit;
 
 % initial value points

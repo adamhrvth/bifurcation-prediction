@@ -3,32 +3,26 @@ clc, clear all;
 
 
 %% options and descriptions for file saving
-savedFileName = "expected_output_0_1_1600_samples.mat";
+savedFileName = "ternary_labels_1600_samples.mat";
 
 savedDataFolder = "..\resources\targets";
-savedDataClass = "regression";
+savedDataClass = "classification";
 
-dataStructure = "matrix";
-dataType = "numeric";
-rangeOfValues = "only 0 or 1";
-
-
-
-%% load training time series
-loadedDataFolder = "..\resources\data\simulation";
-loadedDataClass = "normalized";
-loadedFileName = "sys1_c1_0_5_c3_0_5_1_5_polar_normalized.mat";
-
-load(fullfile(loadedDataFolder, loadedDataClass, loadedFileName));
-
-% total number of series
-numberOfSamples = data.meta.paramPoints * data.meta.initPoints;
+dataStructure = "categorical array";
+dataType = "label";
+rangeOfValues = "'before', 'close' or 'after'";
 
 
 
 %% generate expected output
-targetValues = [zeros(1, numberOfSamples/2), ones(1, numberOfSamples/2)];
+numberOfSamples = 1600;
+targetValues = strings(numberOfSamples, 1);
 
+targetValues(1:13*40, 1) = "before";
+targetValues(13*40+1:(13+14)*40, 1) = "close";
+targetValues((13+14)*40+1:1600, 1) = "after";
+
+targetValues = categorical(targetValues);
 
 
 %% save the values and the metadata
@@ -38,6 +32,7 @@ data.meta.dataStructure = dataStructure;
 data.meta.type = dataType;
 data.meta.rangeOfValues = rangeOfValues;
 data.meta.numberOfSamples = numberOfSamples;
+data.meta.numberOfClasses = {"13*40"; "14*40"; "13*40"};
 
 data.targetValues = targetValues;
 

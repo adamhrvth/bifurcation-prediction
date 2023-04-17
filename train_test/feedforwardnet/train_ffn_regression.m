@@ -7,7 +7,7 @@ networkFileName = "ffn_advanced_sys1_absamp_c1_0_5_c3_0_5_1_5_IC_0_7_2_1600sampl
 
 %% load training data set
 % load series
-seriesFileName = "sys1_c1_0_5_c3_0_5_1_5_IC_0_7_2_1600samples_absamp.mat";
+seriesFileName = "sys1_c1_0_5_c3_0_5_1_5_IC_0_7_2_1600samples_minmax.mat";
 seriesFileFolder = "..\..\resources\data\simulation\normalized";
 
 series = load(fullfile(seriesFileFolder, seriesFileName));
