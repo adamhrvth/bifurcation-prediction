@@ -3,7 +3,7 @@ clc, clear all;
 
 
 %% options and descriptions for file saving
-savedFileName = "sys2_c1_0_1_c3_0_5_1_5_IC_0_7_2_1600samples_t_500.mat";
+savedFileName = "sys1_c1_0_5_c3_0_05_0_98_IC_0_7_5_1600samples.mat";
 
 savedFileForder = "..\resources\data\simulation\raw";
 
@@ -12,28 +12,28 @@ savedFileForder = "..\resources\data\simulation\raw";
 %% generating training data
 
 % parameters
-c1 = 0.1;
-% c3Crit = -10 / 9 * sqrt(2*c1) * 1.34;       % System 2
+c1 = 0.5;
+%c3Crit = -10 / 9 * sqrt(2*c1) * 1.34;       % System 2
 c3Crit = 40 / 9 * c1;                     % System 1
-c3Range = [0.5, 1.5] * c3Crit;
+c3Range = [0.05, 0.98] * c3Crit;
 
 % initial value points
-x0Range = [0.7, 2];
+x0Range = [0.7, 5];
 
 % number of distinct c_3 parameter points, initial value pairs
 paramPoints = 40;
 initPoints = 40;
 
-tspan = 0:0.5:500;
+tspan = 0:0.1:100;
 
-[t, x] = runSimulation(@system_dyn_2_fun, c1, c3Range, x0Range, paramPoints, initPoints, tspan);
+[t, x] = runSimulation(@system_dyn_fun, c1, c3Range, x0Range, paramPoints, initPoints, tspan);
 
 
 
 %% generating metadata for the saved file
 meta.dataStructure = "matrix";
 meta.type = "simulation data";
-meta.system = "System 2";
+meta.system = "System 1";
 meta.c1 = c1;
 meta.c3Relative = [min(c3Range)/c3Crit, max(c3Range)/c3Crit];
 meta.c3 = c3Range;

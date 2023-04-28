@@ -8,7 +8,7 @@ addpath('./transformators');
 %% load simulation results
 loadedFileFolder = '..\resources\data\';
 loadedDataOrigin = 'simulation';
-loadedFileName = 'sys1_c1_0_5_c3_3ranges_IC_0_7_2_1600samples';
+loadedFileName = 'sys2_c1_0_5_c3_3ranges_IC_0_7_2_1600samples';
 
 load(fullfile(loadedFileFolder, loadedDataOrigin, "raw", loadedFileName));
 
