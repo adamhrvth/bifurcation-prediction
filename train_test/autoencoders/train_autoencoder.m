@@ -2,13 +2,13 @@ clc, clear all;
 
 % network file to be saved
 networkFileFolder = "..\..\results\networks\trained_autoencoder";
-networkFileName = "conv_autoencoder_system1_extendedICs_before.mat";
+networkFileName = "conv_autoencoder_system1_2D_after_dropout.mat";
 
 
 
 %% load training data set
 % load series
-seriesFileName = "sys1_c1_0_5_c3_0_05_0_98_IC_0_7_5_1600samples_minmax_cell";
+seriesFileName = "sys1_2Dparams_c1_0_8_1_2_c3_1_5_1_8_ICfixed_1_1_1600samples_minmax_cell";
 seriesFileFolder = "..\..\resources\data\simulation\normalized";
 
 series = load(fullfile(seriesFileFolder, seriesFileName));
@@ -49,16 +49,16 @@ for i = 1 : numDownsamples
     layers = [
         layers
         convolution1dLayer(filterSize, (numDownsamples + 1 - i)*numFilters, Padding="same", Stride = 2)
-        reluLayer];
-        %dropoutLayer(dropoutProb)];
+        reluLayer
+        dropoutLayer(dropoutProb)];
 end
 
 for i = 1 : numDownsamples
     layers = [
         layers
         transposedConv1dLayer(filterSize, i*numFilters, Cropping="same", Stride = 2)
-        reluLayer];
-        %dropoutLayer(dropoutProb)];
+        reluLayer
+        dropoutLayer(dropoutProb)];
 end
 
 layers = [

@@ -3,7 +3,7 @@ clc, clear all;
 
 
 %% load network
-networkFileName = "conv_autoencoder_system1_extendedICs_before.mat";
+networkFileName = "conv_autoencoder_system1_2D_before_dropout.mat";
 networkClass = "autoencoder";
 networkFolderName = "..\..\results\networks\trained_";
 
@@ -14,7 +14,7 @@ net = network.data.net;
 
 
 %% load testing data set
-seriesFileName = "sys1_c1_0_5_c3_0_2_IC_0_7_2_1600samples_minmax_cell";
+seriesFileName = "sys1_2Dparams_c1_0_8_1_2_c3_0_4_0_8_ICfixed_1_1_1600samples_minmax_cell";
 seriesFileFolder = "..\..\resources\data\simulation\normalized";
 
 series = load(fullfile(seriesFileFolder, seriesFileName));
@@ -40,8 +40,12 @@ end
 %% plotting
 figure("Position", [10 10 900 600]);
 hold on;
-bar(1:numel(rho)/2, accuracy(1:numel(rho)/2));
-bar(numel(rho)/2+1:numel(rho), accuracy( numel(rho)/2+1 : numel(rho) ));
+bar(linspace(min(series.data.meta.c3Relative), 1, numel(rho)/2), accuracy(1:numel(rho)/2)*100, 'b');
+bar(linspace(1, max(series.data.meta.c3Relative), numel(rho)/2), accuracy( numel(rho)/2+1 : numel(rho) )*100, 'r');
+legend("before bifurcation", "after bifurcation", "location", "northwest");
+grid on;
+xlabel("Relative bifurcation parameter $c_3$ [1]");
+ylabel("Mean absolute error [\%]");
 
 
 % set figure properties
@@ -54,5 +58,5 @@ end
 set(findall(gcf,'-property','FontSize'),'FontSize', 18);
 
 
-%exportgraphics(gcf,'../../final_docs/images/polar_normalization_illustration.png', 'Resolution', 300)
+exportgraphics(gcf,'../../../final_docs/images/conv_autoencoder_1_training2_test2_dropout.png', 'Resolution', 300)
 

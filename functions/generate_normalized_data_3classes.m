@@ -8,7 +8,7 @@ addpath('./transformators');
 %% load simulation results
 loadedFileFolder = '..\resources\data\';
 loadedDataOrigin = 'simulation';
-loadedFileName = 'sys2_c1_0_5_c3_3ranges_IC_0_7_2_1600samples';
+loadedFileName = 'sys2_c1_0_3_c3_3ranges_IC_0_7_2_1600samples';
 
 load(fullfile(loadedFileFolder, loadedDataOrigin, "raw", loadedFileName));
 
@@ -39,7 +39,7 @@ meta = data.meta;
 
 
 %% options and descriptions for file saving
-savedFileName = strcat(loadedFileName, "_polar");
+savedFileName = strcat(loadedFileName, "_polar_log");
 savedFileFolder = "..\resources\data\simulation\normalized";
 
 
@@ -50,12 +50,12 @@ savedFileFolder = "..\resources\data\simulation\normalized";
 rho = cell(size(x, 1), 1);
 
 for i = 1 : size(x, 1)
-    rho{i} = normalizeSeries("max +1", normalizeSeries("polar", x(i, :), xdot(i, :)));
+    rho{i} = log(normalizeSeries("max +1", normalizeSeries("polar", x(i, :), xdot(i, :))));
 end
 
 
 %% extend metadata
-meta.normalization = "polar transformation and then setting the maximum to be 1";
+meta.normalization = "polar transformation and then setting the maximum to be 1, taking the logarithm of the series after that";
 
 
 

@@ -3,7 +3,7 @@ clc, clear all;
 
 
 %% load simulation results in matrix format
-seriesFileName = "sys1_c1_0_5_c3_1_05_2_IC_0_7_5_1600samples_minmax";
+seriesFileName = "sys1_2Dparams_c1_0_8_1_2_c3_1_5_1_8_ICfixed_1_1_1600samples_minmax";
 seriesFileFolder = "..\resources\data\simulation\normalized";
 
 series = load(fullfile(seriesFileFolder, seriesFileName));
