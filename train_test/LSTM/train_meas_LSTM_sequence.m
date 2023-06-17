@@ -3,7 +3,7 @@ clc, clear all;
 
 
 %% Load data
-load ("processedData_EqualNumber_NormalizedMinMax_ABS_sequence.mat");
+load ("../../resources/data/measurement/processedData_EqualNumber_NormalizedMinMax_ABS_sequence.mat");
 
 
 
@@ -42,6 +42,6 @@ net = trainNetwork(XTrain, TTrain, layers, options);
 
 
 
-save("net_meas_HU50_0_8_absamp_norm_10800_samples", "net");
+save("../../results/networks/trained_LSTM/LSTM_meas_HU50_0_8_absamp_norm_10800_samples", "net");
 
 

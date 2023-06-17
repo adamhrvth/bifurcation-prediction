@@ -1,29 +1,25 @@
 clc, clear all;
 
 % network file to be saved
-networkFileFolder = "..\..\results\networks\trained_CONVnet";
-networkFileName = "CONVnet_sys1_noisy_polar_log_3options_c1_0_5_IC_0_7_2_1600samples.mat";
+networkFileName = "polar_log_trained_x1_mvn_avg.mat";
 
 
 
 %% load training data set
 % load series
-seriesFileName = "sys1_c1_0_5_c3_3ranges_IC_0_7_2_1600samples_noisy_polar_log";
-seriesFileFolder = "..\..\resources\data\simulation\normalized";
+seriesFileName = "../vanderpol_data/vanderpol_x1_varyingICs_polar_log_mvn_avg";
 
-series = load(fullfile(seriesFileFolder, seriesFileName));
+series = load(seriesFileName);
 
-rho = series.data.rho;
+rho = series.data.rho';
 meta = series.data.meta;
 
 
 
 %% load targetclassification
-targetFileName = "ternary_labels_1600_samples.mat";
-targetFileFolder = "..\..\resources\targets";
-targetClass = "classification";
+targetFileName = "../vanderpol_data/ternary_labels_1500_samples_vanderpol_forvaryingICs.mat";
 
-targets = load(fullfile(targetFileFolder, targetClass, targetFileName));
+targets = load(targetFileName);
 targetClassification = targets.data.targetValues;
 
 
@@ -40,23 +36,24 @@ layers = [ ...
     sequenceInputLayer(inputSize)
     convolution1dLayer(filterSize, numFilters, Padding="causal")
     reluLayer
+%     dropoutLayer(0.3)
     layerNormalizationLayer
     convolution1dLayer(filterSize, 2*numFilters, Padding="causal")
     reluLayer
+%     dropoutLayer(0.3)
     layerNormalizationLayer
     globalAveragePooling1dLayer
     fullyConnectedLayer(numClasses)
     softmaxLayer
     classificationLayer];
 
-maxEpochs = 50;
-initialLearnRate = 0.001;
+maxEpochs = 40;
+% initialLearnRate = 0.001;
 
 options = trainingOptions("adam", ...
     MiniBatchSize = miniBatchSize, ...
     MaxEpochs = maxEpochs, ...
     SequencePaddingDirection = "left", ...
-    InitialLearnRate = initialLearnRate, ...
     Plots="training-progress", ...
     Verbose=0);
 
@@ -72,7 +69,6 @@ data.net = net;
 
 data.meta.trainingData = meta;
 data.meta.trainingData.miniBatchSize = miniBatchSize;
-data.meta.trainingData.initialLearnRate = initialLearnRate;
 data.meta.trainingData.maxEpochs = maxEpochs;
 
 data.meta.networkDetails.type = "Convolutional neural network";
@@ -82,5 +78,5 @@ data.meta.networkDetails.filterSizeLayer2 = filterSize;
 data.meta.networkDetails.numFiltersLayer1 = numFilters;
 data.meta.networkDetails.numFiltersLayer2 = 2*numFilters;
 
-save(fullfile(networkFileFolder, networkFileName), "data");
+save(networkFileName, "data");
 

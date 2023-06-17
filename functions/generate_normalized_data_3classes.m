@@ -8,7 +8,7 @@ addpath('./transformators');
 %% load simulation results
 loadedFileFolder = '..\resources\data\';
 loadedDataOrigin = 'simulation';
-loadedFileName = 'sys2_c1_0_3_c3_3ranges_IC_0_7_2_1600samples';
+loadedFileName = 'sys1_c1_0_5_c3_3ranges_IC_0_7_2_1600samples_noisy';
 
 load(fullfile(loadedFileFolder, loadedDataOrigin, "raw", loadedFileName));
 
@@ -48,6 +48,7 @@ savedFileFolder = "..\resources\data\simulation\normalized";
 
 % calculate rho for each series
 rho = cell(size(x, 1), 1);
+filterLen = 100;
 
 for i = 1 : size(x, 1)
     rho{i} = log(normalizeSeries("max +1", normalizeSeries("polar", x(i, :), xdot(i, :))));
@@ -55,7 +56,7 @@ end
 
 
 %% extend metadata
-meta.normalization = "polar transformation and then setting the maximum to be 1, taking the logarithm of the series after that";
+meta.normalization = "polar transformation and then setting the maximum to be 1, taking the logarithm after that";
 
 
 

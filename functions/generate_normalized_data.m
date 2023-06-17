@@ -8,7 +8,7 @@ addpath('./transformators');
 %% load simulation results
 loadedFileFolder = '..\resources\data\';
 loadedDataOrigin = 'simulation';
-loadedFileName = 'sys1_2Dparams_c1_0_8_1_2_c3_1_5_1_8_ICfixed_1_1_1600samples';
+loadedFileName = 'sys1_c1_0_5_c3_0_2_IC_0_7_2_1600samples_noisy';
 
 load(fullfile(loadedFileFolder, loadedDataOrigin, "raw", loadedFileName));
 
@@ -18,7 +18,7 @@ meta = data.meta;
 
 
 %% options and descriptions for file saving
-savedFileName = strcat(loadedFileName, "_minmax");
+savedFileName = strcat(loadedFileName, "_polar_log");
 savedFileFolder = "..\resources\data\simulation\normalized";
 
 
@@ -30,14 +30,14 @@ rho = zeros(size(x, 1), size(x, 3));
 
 for i = 1 : size(x, 3)
     
-    rho(:, i) = normalizeSeries("-1 to +1", x(:, 1, i));
+    rho(:, i) = log(normalizeSeries("max +1" ,normalizeSeries("polar", x(:, 1, i), x(:, 2, i))));
 
 end
 
 
 
 %% extend metadata
-meta.normalization = "normalizing the displacement to be between -1 and +1";
+meta.normalization = "polar transformation and then setting the maximum to be 1, taking the logarithm of the series after that";
 
 
 

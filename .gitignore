@@ -1,3 +1,5 @@
 resources/
 *.asv
 results/images
+vanderpol_data/
+flutter_data/

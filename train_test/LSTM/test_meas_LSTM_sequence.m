@@ -3,12 +3,12 @@
 % set like "measurement_data_set_absamp_norm_10800_samples.mat"
 
 %% load trained NN
-netStruct = load('net_meas_HU50_0_8_absamp_norm_10800_samples.mat', "net");
+netStruct = load('../../results/networks/trained_LSTM/LSTM_meas_HU50_0_8_absamp_norm_10800_samples.mat', "net");
 dataStruct = data;
 
 
 %% load validation data
-dataset = load('measurement_data_set_absamp_norm_10800_samples.mat');
+dataset = load('../../resources/data/measurement/measurement_data_set_absamp_norm_10800_samples.mat');
 TValidation = dataset.data.TValidation;
 XValidation = dataset.data.XValidation;
 
